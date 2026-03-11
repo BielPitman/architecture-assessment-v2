@@ -1,0 +1,80 @@
+/**
+ * Closing questions CL1-CL4 + optional OPT1-OPT2.
+ * These appear after every firm type module.
+ */
+export const CLOSING_QUESTIONS = [
+  {
+    id: "after_hours",
+    label: "CL1",
+    category: "CLIENT RESPONSIVENESS",
+    question: "When someone contacts your firm outside of business hours, what happens?",
+    type: "single-select",
+    required: true,
+    options: [
+      "They wait until the next business day (voicemail or contact form)",
+      "We have an answering service or auto-response that acknowledges the inquiry",
+      "Someone on the team checks messages after hours and responds if appropriate",
+      "We do not have a consistent process for after-hours contact",
+    ],
+  },
+  {
+    id: "intake_speed",
+    label: "CL2",
+    category: "CLIENT RESPONSIVENESS",
+    question: "From the moment someone first contacts your firm about a potential project to a signed agreement, how long does the process typically take?",
+    type: "single-select",
+    required: true,
+    options: [
+      "Same day or next day",
+      "2-5 business days",
+      "About a week",
+      "More than a week",
+      "We do not have a consistent intake process",
+    ],
+  },
+  {
+    id: "urgency",
+    label: "CL3",
+    category: "INVESTMENT APPETITE",
+    question: "How urgently does your firm need to address the gaps you have identified through this assessment?",
+    type: "scale",
+    required: true,
+    min: 1,
+    max: 5,
+    minLabel: "Exploring options",
+    maxLabel: "This needs to move now",
+  },
+  {
+    id: "investment",
+    label: "CL4",
+    category: "INVESTMENT APPETITE",
+    question: "What investment level feels proportionate for acting on this?",
+    type: "single-select",
+    required: true,
+    options: [
+      "Under $5K: start with a targeted pilot",
+      "$5K-$25K: a meaningful engagement",
+      "$25K-$75K: we are serious about this",
+      "$75K+: committed to real transformation",
+      "Depends on what you show us",
+    ],
+  },
+  {
+    id: "success_vision",
+    label: "OPT1",
+    category: "OPEN RESPONSE",
+    question: "What would success look like for your firm 12 months from now?",
+    subtitle: "Optional \u2014 but the more specific you are, the more targeted your report will be.",
+    type: "textarea",
+    required: false,
+  },
+  {
+    id: "anything_else",
+    label: "OPT2",
+    category: "OPEN RESPONSE",
+    question: "Anything else you would like us to know before we prepare your report?",
+    subtitle: "A specific challenge, project type concern, or context that would be useful to know.",
+    type: "textarea",
+    required: false,
+  },
+];

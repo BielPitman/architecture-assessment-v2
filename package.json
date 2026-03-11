@@ -1,0 +1,13 @@
+{
+  "name": "architecture-assessment-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Archificials Architecture Practice AI Readiness Assessment v2 - Modular architecture with 8 firm type modules",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
