@@ -72,8 +72,50 @@ const numberFields = [
   "score_practice_readiness", "score_overall",
 ];
 
+async function findWorkspaceId() {
+  // List existing bases to find a workspace ID
+  const res = await fetch("https://api.airtable.com/v0/meta/bases", {
+    headers: { Authorization: `Bearer ${API_KEY}` },
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    console.error("Failed to list bases:", res.status, JSON.stringify(data, null, 2));
+    process.exit(1);
+  }
+  const bases = data.bases || [];
+  if (bases.length === 0) {
+    console.error("No bases found. Create a base manually in Airtable, then pass AIRTABLE_BASE_ID.");
+    process.exit(1);
+  }
+  console.log("Existing bases:");
+  bases.forEach(b => console.log(`  - ${b.id}: ${b.name}`));
+
+  // The first base should give us the workspace via the permissionLevel endpoint
+  // Actually, bases don't expose workspaceId in list. Try the Enterprise API path.
+  // Fallback: use the same workspace as the law firm base
+  // For the meta/bases POST, we need to find a workspaceId.
+  // Let's try getting it from the base schema endpoint.
+  const schemaRes = await fetch(`https://api.airtable.com/v0/meta/bases/${bases[0].id}`, {
+    headers: { Authorization: `Bearer ${API_KEY}` },
+  });
+  const schemaData = await schemaRes.json();
+  if (schemaData.workspaceId) {
+    console.log(`Found workspace: ${schemaData.workspaceId}`);
+    return schemaData.workspaceId;
+  }
+
+  // If we can't find workspace, just print bases and exit with instructions
+  console.error("\nCould not determine workspace ID automatically.");
+  console.error("Alternative: create a base manually in Airtable, then run:");
+  console.error(`  $env:AIRTABLE_BASE_ID = "appXXX"  # your new base ID`);
+  console.error("  node scripts/create-airtable-table.js");
+  process.exit(1);
+}
+
 async function createBase() {
   console.log("No AIRTABLE_BASE_ID set — creating new base...");
+
+  const workspaceId = await findWorkspaceId();
 
   const res = await fetch("https://api.airtable.com/v0/meta/bases", {
     method: "POST",
@@ -83,6 +125,7 @@ async function createBase() {
     },
     body: JSON.stringify({
       name: "Architecture Assessment V2",
+      workspaceId,
       tables: [{
         name: "Placeholder",
         fields: [{ name: "Name", type: "singleLineText" }],

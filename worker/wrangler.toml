@@ -3,7 +3,7 @@ main = "index.js"
 compatibility_date = "2024-01-01"
 
 [vars]
-AIRTABLE_BASE_ID = "REPLACE_WITH_ARCHITECTURE_BASE_ID"
+AIRTABLE_BASE_ID = "appB7PmFnNvV3085q"
 AIRTABLE_TABLE = "V2 Assessments"
 NOTIFY_EMAIL = "biel@archificials.com"
 
